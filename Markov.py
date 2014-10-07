@@ -31,33 +31,22 @@ def make_text(chains_dictionary):
     output_string = ""
 
     random_key = random.choice(chains_dictionary.keys())
-  #  original_options = chains_dictionary[random_key]
-  #  original_chosen_one = random.choice(original_options)
-  #  output_string = original_chosen_one
-  #  seed_key = (random_key[1], original_chosen_one)
     seed_key = random_key
-    new_key = random_key
+
     
-    while new_key in chains_dictionary:
+    while seed_key in chains_dictionary:
        
         options = chains_dictionary[seed_key]
         chosen_one = random.choice(options)
         output_string = output_string + ' ' + chosen_one
-        new_key = (seed_key[1], chosen_one)
-        seed_key = new_key
-        
+        seed_key = (seed_key[1], chosen_one)
+
     return output_string
 
 def main():
-   # args = sys.argv
-
-#  Change this to read input_text from a file
-
     
     chain_dict = make_chains(text)
     print(make_text(chain_dict))
-    # print random_text
-
 
 if __name__ == "__main__":
     main()
