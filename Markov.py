@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-import sys 
-import random
+import sys, os
+import random, twitter
 
 
 def make_chains(corpus):
@@ -57,11 +57,13 @@ def make_text(chains_dictionary):
         temp_output = (output_string.split('"'))
         output_string = "".join(temp_output)
 
-    print output_string
-    print len(output_string)
+    return output_string
+    #print len(output_string)
 
 def main():
     
+    api = twitter.Api(consumer_key=os.environ.get('CONSUMER_KEY'), consumer_secret=os.environ.get('CONSUMER_SECRET'), access_token_key=os.environ.get('ACCESS_TOKEN'), access_token_secret=os.environ.get('ACCESS_TOKEN_SECRET'))
+
     args = sys.argv
 
     combined_text = ""
@@ -73,7 +75,7 @@ def main():
 
 
     chain_dict = make_chains(combined_text)
-    (make_text(chain_dict))
+    api.PostUpdate(make_text(chain_dict))
 
 if __name__ == "__main__":
     main()
