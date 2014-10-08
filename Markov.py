@@ -4,7 +4,6 @@ import sys
 import random
 
 
-
 def make_chains(corpus):
     """Takes an input text as a string and returns a dictionary of
     markov chains."""
@@ -29,33 +28,52 @@ def make_text(chains_dictionary):
     
 
     random_key = random.choice(chains_dictionary.keys())
+
+    while ord(random_key[0][0]) < 65 or ord(random_key[0][0]) > 90:
+         random_key = random.choice(chains_dictionary.keys())
+   
     seed_key = random_key
+    
+
     output_string = seed_key[0] + ' ' + seed_key[1]
     
-    #while seed_key in chains_dictionary:
-    for i in range(60):   
+    while seed_key in chains_dictionary:
         options = chains_dictionary[seed_key]
         chosen_one = random.choice(options)
         output_string = output_string + ' ' + chosen_one
-        seed_key = (seed_key[1], chosen_one)
+        sentence_enders = ['.', '!', '?']
 
-    return output_string
+        if len(output_string) < 139 and len(output_string) > 80 and output_string[-1] in sentence_enders:
+            break
+        else:
+            if len(output_string) > 130:
+                # last_word_removed = " ".join(output_string.split()[-1])
+                output_string += random.choice(sentence_enders)
+                break
+            else:
+                seed_key = (seed_key[1], chosen_one)
+
+    if '"' in output_string:
+        temp_output = (output_string.split('"'))
+        output_string = "".join(temp_output)
+
+    print output_string
+    print len(output_string)
 
 def main():
     
-    #script, filename = argv
     args = sys.argv
 
     combined_text = ""
-    #chain_dict = {}
+
     for arg in args[1:]:
         raw_text = open(arg)
-        text = raw_text.read().lower().strip()
+        text = raw_text.read().strip()
         combined_text = combined_text + ' ' + text
 
 
     chain_dict = make_chains(combined_text)
-    print(make_text(chain_dict))
+    (make_text(chain_dict))
 
 if __name__ == "__main__":
     main()
