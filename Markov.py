@@ -61,7 +61,7 @@ def make_text(chains_dictionary):
     #print len(output_string)
 
 def main():
-    
+   # print os.environ.get('CONSUMER_KEY'), os.environ.get('CONSUMER_SECRET'), os.environ.get('ACCESS_TOKEN'),os.environ.get('ACCESS_TOKEN_SECRET')
     api = twitter.Api(consumer_key=os.environ.get('CONSUMER_KEY'), consumer_secret=os.environ.get('CONSUMER_SECRET'), access_token_key=os.environ.get('ACCESS_TOKEN'), access_token_secret=os.environ.get('ACCESS_TOKEN_SECRET'))
 
     args = sys.argv
